@@ -1,5 +1,5 @@
 services:
-  # Servicio de Mensajería (Ya lo tenías)
+  # Servicio de Mensajería
   rabbitmq:
     image: rabbitmq:3.12-management
     container_name: saga-rabbitmq
@@ -10,7 +10,7 @@ services:
       RABBITMQ_DEFAULT_USER: user
       RABBITMQ_DEFAULT_PASS: password
 
-  # NUEVO: Servicio de Base de Datos
+  # Servicio de Base de Datos
   mysql:
     image: mysql:8.0
     container_name: saga-mysql
