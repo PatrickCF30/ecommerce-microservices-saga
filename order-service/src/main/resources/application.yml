@@ -1,0 +1,45 @@
+server:
+    port: 8080
+
+spring:
+    application:
+        name: order-service
+
+    datasource:
+        # URL de MySQL en Docker. Creamos la base de datos 'ecommerce_db' en el compose
+        url: jdbc:mysql://localhost:3306/ecommerce_db?allowPublicKeyRetrieval=true&useSSL=false
+        username: root
+        password: rootpassword
+        driver-class-name: com.mysql.cj.jdbc.Driver
+
+    jpa:
+        hibernate:
+            ddl-auto: update # Esto creará las tablas automáticamente en MySQL
+        show-sql: true
+        properties:
+            hibernate:
+                dialect: org.hibernate.dialect.MySQL8Dialect
+
+    # RabbitMQ config (mantenla igual)
+    rabbitmq:
+        host: localhost
+        port: 5672
+        username: user
+        password: password
+
+# Resilience4j config (mantenla igual)
+resilience4j:
+    circuitbreaker:
+        instances:
+            paymentBreaker:
+                registerHealthIndicator: true
+                slidingWindowSize: 5
+                minimumNumberOfCalls: 3
+                permittedNumberOfCallsInHalfOpenState: 3
+                waitDurationInOpenState: 5s
+                failureRateThreshold: 50
+
+eureka:
+    client:
+        service-url:
+            defaultZone: http://localhost:8761/eureka/
